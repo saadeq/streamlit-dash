@@ -13,10 +13,11 @@ df["Date"] = pd.to_datetime(df["Date"])
 
 # Create the "Quarter" column
 df["Quarter"] = pd.PeriodIndex(df["Date"], freq="Q")
-st.write(df)
+st.write('#')
 
 quarterly_sum = df.groupby("Quarter")["N_active"].sum()
-st.write(quarterly_sum)
+
+st.write('### bar chart')
 # Define a function to plot the bar chart 
 def plot_bar_chart(data):
     fig = go.Figure(data=[go.Bar(x=data.index.strftime("%Y-Q%q"), y=data.values)])
@@ -25,11 +26,15 @@ def plot_bar_chart(data):
 
 # Use Streamlit's multiselect widget to allow the user to select which quarter to display
 quarters = quarterly_sum.index.strftime("%Y-Q%q").tolist()
-st.write(quarters)
+st.write('#')
 selected_quarters = st.multiselect("Select Quarters", quarters, default=quarters)
 
 # Filter the quarterly_sum data for the selected quarters
 filtered_data = quarterly_sum[quarterly_sum.index.strftime("%Y-Q%q").isin(selected_quarters)]
-st.write(filtered_data)
+st.write('#')
 
 plot_bar_chart(filtered_data)
+
+st.markdown("""
+this app create just for test deploy project on streamlit cloud
+""")
